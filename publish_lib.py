@@ -26,7 +26,7 @@ if not changed:
 environ["LIB_VERSION"] = str(version)
 sandbox.run_setup("setup.py", ["bdist_wheel"])
 
-release_id = create_release(version=version, access_token=access_token)
+release_id = create_release(version=version, access_token=access_token, tag_prefix="lib")
 upload_release_asset(
     release_id=release_id,
     filename_pattern="dist/publish-tools-*.whl",
