@@ -29,6 +29,6 @@ sandbox.run_setup("setup.py", ["bdist_wheel"])
 release_id = create_release(version=version, access_token=access_token, tag_prefix="version")
 upload_release_asset(
     release_id=release_id,
-    filename_pattern="dist/publish-tools-*.whl",
+    filename_pattern="dist/publish_tools-*.whl",
     access_token=access_token,
 )
