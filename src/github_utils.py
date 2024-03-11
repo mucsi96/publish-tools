@@ -104,4 +104,5 @@ def create_pages_artifact(
     run(["chmod", "-c", "-R", "+rX", directory])
     run(["tar", "--dereference", "--hard-dereference",
         "--directory", directory, "-cvf", tar_file, "."])
-    run(["echo", f"artifact={tar_file}", ">>", environ.get("GITHUB_OUTPUT")])
+    with open(environ.get("GITHUB_OUTPUT"), 'a') as output:
+        output.write(f"artifact={tar_file}")
