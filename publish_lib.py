@@ -18,7 +18,7 @@ if not access_token:
     print("GitHub access token is missing", flush=True, file=sys.stderr)
     exit(1)
 
-changed, version = get_version(src="src", tag_prefix="lib")
+changed, version = get_version(src="src", tag_prefix="version")
 
 if not changed:
     exit()
@@ -26,7 +26,7 @@ if not changed:
 environ["LIB_VERSION"] = str(version)
 sandbox.run_setup("setup.py", ["bdist_wheel"])
 
-release_id = create_release(version=version, access_token=access_token, tag_prefix="lib")
+release_id = create_release(version=version, access_token=access_token, tag_prefix="version")
 upload_release_asset(
     release_id=release_id,
     filename_pattern="dist/publish-tools-*.whl",
