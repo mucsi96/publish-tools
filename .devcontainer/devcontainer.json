@@ -1,0 +1,6 @@
+{
+  // https://github.com/devcontainers/images/blob/main/src/python
+  "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
+  "postCreateCommand": "pip install -r requirements.txt",
+  "postStartCommand": "git config --global --add safe.directory /workspaces/${localWorkspaceFolderBasename}"
+}
