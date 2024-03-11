@@ -1,1 +1,2 @@
 - add NPN publishibg support
+- add GitHub pages support
