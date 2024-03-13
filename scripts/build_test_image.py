@@ -6,7 +6,7 @@ from pathlib import Path
 from src.ansible_utils import load_vars
 from src.docker_utils import build_and_push_docker_img
 
-root_directory = Path(__file__).parent
+root_directory = Path(__file__).parent.parent
 data = load_vars(root_directory / '.ansible/vault_key',
                  root_directory / 'vars/vault.yaml')
 docker_username = data['docker_username']
