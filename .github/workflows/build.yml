@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  pack-pages:
+  pack-test-pages:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,19 +21,19 @@ jobs:
           python-version: "3.12"
           cache: "pip"
       - run: pip install -r requirements.txt
-      - id: pack-pages
-        run: python pack_pages.py
+      - id: pack-test-pages
+        run: python scripts/pack_test_pages.py
       - name: Upload artifact
         id: upload-artifact
         uses: actions/upload-artifact@v4
         with:
           name: github-pages
-          path: ${{ steps.pack-pages.outputs.artifact }}
+          path: ${{ steps.pack-test-pages.outputs.artifact }}
           retention-days: 30
 
-  deploy-pages:
+  deploy-test-pages:
     runs-on: ubuntu-latest
-    needs: pack-pages
+    needs: pack-test-pages
     permissions:
       pages: write      # to deploy to Pages
       id-token: write   # to verify the deployment originates from an appropriate source
@@ -45,9 +45,28 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
+  build-test-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Get Ansible Vault key
+        run: |
+          mkdir .ansible
+          echo "${{ secrets.ANSIBLE_VAULT_KEY }}" > .ansible/vault_key
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+          cache: "pip"
+      - run: pip install -r requirements.txt
+      - run: python scripts/build_test_image.py ${{ secrets.GITHUB_TOKEN }}
+
   build-python-lib:
     runs-on: ubuntu-latest
-    needs: deploy-pages
+    needs:
+      - deploy-test-pages
+      - build-test-image
     permissions:
       contents: write
     steps:
@@ -59,4 +78,4 @@ jobs:
           python-version: "3.12"
           cache: "pip"
       - run: pip install -r requirements.txt
-      - run: python publish_lib.py ${{ secrets.GITHUB_TOKEN }}
+      - run: python scripts/publish_lib.py ${{ secrets.GITHUB_TOKEN }}

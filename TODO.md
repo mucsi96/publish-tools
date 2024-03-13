@@ -1,2 +1,1 @@
-- add NPN publishibg support
-- add GitHub pages support
+- add NPN publishibg support https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages#publishing-packages-to-the-npm-registry
