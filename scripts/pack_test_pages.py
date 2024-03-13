@@ -1,11 +1,6 @@
 #!/usr/bin/env python3
 
-from pathlib import Path
-import sys
-
-root_directory = Path(__file__).parent
-sys.path.append(str(root_directory))
-
+import init
 from src.github_utils import create_pages_artifact
 
 

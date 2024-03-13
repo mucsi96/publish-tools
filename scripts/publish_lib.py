@@ -1,14 +1,9 @@
 #!/usr/bin/env python3
 
+import init
 from os import environ
 import sys
-from pathlib import Path
 from setuptools import sandbox
-
-root_directory = Path(__file__).parent.parent
-
-sys.path.append(str(root_directory))
-
 from src.github_utils import create_release, upload_release_asset
 from src.version_utils import get_version
 
@@ -26,7 +21,8 @@ if not changed:
 environ["LIB_VERSION"] = str(version)
 sandbox.run_setup("setup.py", ["bdist_wheel"])
 
-release_id = create_release(version=version, access_token=access_token, tag_prefix="version")
+release_id = create_release(
+    version=version, access_token=access_token, tag_prefix="version")
 upload_release_asset(
     release_id=release_id,
     filename_pattern="dist/publish_tools-*.whl",
