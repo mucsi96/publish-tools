@@ -14,12 +14,13 @@ access_token = sys.argv[1]
 vault_key = sys.argv[2]
 vault_key_file = root_directory / '.ansible/vault_key'
 
+print(len(vault_key))
+
 with NamedTemporaryFile() as vault_key_file:
     vault_key_file.write(vault_key.encode())
     vault_key_file.flush()
     data = load_vars(vault_key_file.name, root_directory / 'vars/vault.yaml')
 
-print(len(vault_key))
 
 if not access_token:
     print("GitHub access token is missing", flush=True, file=sys.stderr)
