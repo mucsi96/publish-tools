@@ -31,7 +31,7 @@ def create_vault_key(vault_secret_file: Path):
     if path.exists(vault_secret_file):
         raise Exception(f"The file '{vault_secret_file}' already exists.")
 
-    alphabet = ascii_letters + digits + r"""!"#%&()*+,-.:;=?@[\]^_{|}~"""
+    alphabet = ascii_letters + digits + r"""!"#%&()*+,-.:;=?@[\]^_{}~"""
     password = ''.join(choice(alphabet) for i in range(50))
     with open(vault_secret_file, 'w') as file:
         file.write(password)
