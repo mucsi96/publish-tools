@@ -83,7 +83,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - deploy-test-pages
-      - build-test-image
+      - build-test-docker-image
       - publish-test-npm-package
     permissions:
       contents: write
