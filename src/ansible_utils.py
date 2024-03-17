@@ -1,5 +1,3 @@
-import sys
-
 from os import makedirs, path
 from pathlib import Path
 from secrets import choice
@@ -9,19 +7,10 @@ from ansible.constants import DEFAULT_VAULT_ID_MATCH
 from ansible.parsing.dataloader import DataLoader
 
 
-def read_file(file_path: Path):
-    try:
-        with open(file_path, 'rb') as file:
-            return file.read().strip()
-    except:
-        print("Error reading file at", file_path, flush=True, file=sys.stderr)
-
-
-def load_vars(vault_secret_file: Path, vars_file: Path):
-    vault_secret = read_file(vault_secret_file)
+def load_vars(vault_secret: str, vars_file: Path):
     loader = DataLoader()
     loader.set_vault_secrets(
-        [(DEFAULT_VAULT_ID_MATCH, VaultSecret(vault_secret))])
+        [(DEFAULT_VAULT_ID_MATCH, VaultSecret(vault_secret.encode()))])
     return loader.load_from_file(str(vars_file))
 
 
