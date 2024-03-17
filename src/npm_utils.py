@@ -43,7 +43,7 @@ def publish_npm_package(
         file.write(f'registry=https://registry.npmjs.org')
 
     run(['npm', 'publish'], env={
-        'NODE_AUTH_TOKEN': npm_access_token}, check=True)
+        'NODE_AUTH_TOKEN': npm_access_token}, cwd=src, check=True)
 
     create_release(
         tag_prefix=tag_prefix,
