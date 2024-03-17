@@ -30,18 +30,18 @@ def build_and_push_docker_img(
     run(['docker', 'login', '--username', docker_username,
         '--password-stdin'], input=docker_password.encode(), check=True)
     run(['docker', 'buildx', 'create', '--use'])
-    run(['docker', 'buildx', 'build', '--platform', 'linux/amd64,linux/arm64/v8', '--tag', f'{image_name}:latest', '--tag',
-        f'{image_name}:{version}', '--push', '.'], cwd=src, check=True)
+    run(['docker', 'buildx', 'build', '--platform', 'linux/amd64,linux/arm64/v8', '--tag', f'{docker_username}/{image_name}:latest', '--tag',
+        f'{docker_username}/{image_name}:{version}', '--push', '.'], cwd=src, check=True)
 
     create_release(
         tag_prefix=tag_prefix,
         version=version,
         access_token=github_access_token,
         body=dedent(f'''
-            [Docker image on DockerHub](https://hub.docker.com/repository/docker/{image_name})
+            [Docker image on DockerHub](https://hub.docker.com/repository/docker/{docker_username}/{image_name})
 
             ```yaml
-            image: {image_name}:{version}
+            image: {docker_username}/{image_name}:{version}
             ```
         ''')
     )

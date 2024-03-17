@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from os import makedirs
+from os import environ, makedirs
 from posixpath import dirname
 from tempfile import NamedTemporaryFile
 import init
@@ -26,7 +26,7 @@ build_and_push_docker_img(
     src="src",
     tag_prefix="docker-image",
     image_name="publish-tools-test",
-    docker_username=data['docker_username'],
+    docker_username=environ.get('GITHUB_REPOSITORY_OWNER'),
     docker_password=data['docker_password'],
     github_access_token=access_token
 )
