@@ -8,10 +8,12 @@ from typing import List
 from .github_utils import create_release
 from .version_utils import get_version
 
-def get_npm_package_name(package_json_path: Path):
-    with open(package_json_path, 'r') as file:
+
+def get_npm_package_name(root_path: Path):
+    with open(root_path / 'package.json', 'r') as file:
         package_data = json.load(file)
         return package_data['name']
+
 
 def publish_npm_package(
     *,
@@ -22,7 +24,7 @@ def publish_npm_package(
     ignore: List[str] = [],
 ):
     package_name = get_npm_package_name(src)
-    
+
     if not npm_access_token:
         print('NPM access token is missing', flush=True, file=sys.stderr)
         exit(1)
@@ -36,7 +38,7 @@ def publish_npm_package(
 
     if not changed:
         return
-    
+
     with open(src / '.npmrc', 'w') as file:
         file.write(f'registry=https://registry.npmjs.org')
 
