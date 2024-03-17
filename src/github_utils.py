@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from random import choice
 from string import ascii_letters, digits
 import sys
@@ -97,7 +98,7 @@ def upload_release_asset(
 
 def create_pages_artifact(
     *,
-    directory: str
+    directory: Path
 ):
     random_string = ''.join(choice(ascii_letters + digits) for _ in range(8))
     tar_file = f"{environ.get("RUNNER_TEMP")}/{random_string}.tar"

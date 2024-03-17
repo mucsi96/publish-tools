@@ -13,7 +13,7 @@ root_directory = Path(__file__).parent.parent
 secrets = load_vars(sys.argv[2], root_directory / 'vars/vault.yaml')
 
 publish_npm_package(
-    src="src",
+    src=root_directory / 'src',
     tag_prefix="npm-package",
     npm_access_token=secrets['npm_access_token'],
     github_access_token=sys.argv[1]

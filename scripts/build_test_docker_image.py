@@ -13,7 +13,7 @@ root_directory = Path(__file__).parent.parent
 secrets = load_vars(sys.argv[2], root_directory / 'vars/vault.yaml')
 
 build_and_push_docker_img(
-    src="src",
+    src=root_directory / 'src',
     tag_prefix="docker-image",
     image_name="publish-tools-test",
     docker_username=environ.get('GITHUB_REPOSITORY_OWNER'),
