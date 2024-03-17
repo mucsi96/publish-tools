@@ -8,14 +8,14 @@ from typing import List
 
 def get_previous_tag(tag_prefix):
     result = run(['git', 'describe', '--tags',
-                 f'--match={tag_prefix}-[1-9]*', '--abbrev=0'], capture_output=True)
+                 f'--match={tag_prefix}-[1-9]*', '--abbrev=0'], capture_output=True, text=True)
     if result.stderr:
-        print(result.stderr.decode(), file=sys.stderr, flush=True)
+        print(result.stderr, file=sys.stderr, flush=True)
 
     if result.returncode or not result.stdout:
         return None
 
-    return result.stdout.decode().strip()
+    return result.stdout.strip()
 
 
 def has_source_code_changed(src: Path, prev_tag: str, ignore: List[str]):
@@ -23,28 +23,28 @@ def has_source_code_changed(src: Path, prev_tag: str, ignore: List[str]):
     print(f'Detecting changes in {src} since {prev_tag}', flush=True)
     args = list(filter(bool, ['git', 'diff', '--name-only',
                               'HEAD', prev_tag, '--', '.', ignore_str]))
-    result = run(args, cwd=src, capture_output=True)
+    result = run(args, cwd=src, capture_output=True, text=True)
 
     if result.stderr:
-        print(result.stderr.decode(), file=sys.stderr, flush=True)
+        print(result.stderr, file=sys.stderr, flush=True)
 
     if result.stdout:
-        print(result.stdout.decode(), flush=True)
+        print(result.stdout, flush=True)
 
     return bool(result.stdout)
 
 
 def get_latest_version(tag_prefix: str):
     result = run(['git', 'tag', '--list', '--sort=-v:refname',
-                 f'{tag_prefix}-[1-9]*'], capture_output=True)
+                 f'{tag_prefix}-[1-9]*'], capture_output=True, text=True)
 
     if result.stderr:
-        print(result.stderr.decode(), flush=True, file=sys.stderr)
+        print(result.stderr, flush=True, file=sys.stderr)
 
     if result.returncode or not result.stdout:
         return None
 
-    tags = result.stdout.decode().splitlines()
+    tags = result.stdout.splitlines()
     latest_tag = tags[0]
 
     return int(
