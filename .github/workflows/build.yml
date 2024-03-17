@@ -78,6 +78,8 @@ jobs:
           cache: npm
           cache-dependency-path: src/package-lock.json
       - run: pip install -r requirements.txt
+      - run: npm ci
+        working-directory: src
       - run: python scripts/publish_test_npm_package.py ${{ secrets.GITHUB_TOKEN }} ${{ secrets.ANSIBLE_VAULT_KEY }}
 
   build-python-lib:
