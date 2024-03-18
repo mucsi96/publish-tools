@@ -23,7 +23,7 @@ def set_package_version(root_path: Path, version: int):
 
     package_data['version'] = f'{version}.0.0'
 
-    with open('package.json', 'w') as file:
+    with open(root_path / 'package.json', 'w') as file:
         json.dump(package_data, file, indent=2)
 
 

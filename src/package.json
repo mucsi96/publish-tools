@@ -6,6 +6,9 @@
     "files": [
         "index.js"
     ],
-    "repository": "git@github.com:mucsi96/publish-tools.git",
+    "scripts": {},
+    "repository": {
+        "url": "git+ssh://git@github.com/mucsi96/publish-tools.git"
+    },
     "author": "Igor Bari <mucsi96@gmail.com>"
   }
