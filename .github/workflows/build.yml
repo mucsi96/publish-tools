@@ -74,7 +74,6 @@ jobs:
           cache: pip
       - uses: actions/setup-node@v4
         with:
-          node-version: 21
           cache: npm
           cache-dependency-path: src/package-lock.json
       - run: pip install -r requirements.txt
