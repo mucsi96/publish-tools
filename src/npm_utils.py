@@ -10,10 +10,21 @@ from .github_utils import create_release
 from .version_utils import get_version
 
 
-def get_npm_package_name(root_path: Path):
+def get_package_name(root_path: Path):
     with open(root_path / 'package.json', 'r') as file:
         package_data = json.load(file)
-        return package_data['name']
+
+    return package_data['name']
+
+
+def set_package_version(root_path: Path, version: int):
+    with open(root_path / 'package.json', 'r') as file:
+        package_data = json.load(file)
+
+    package_data['version'] = f'{version}.0.0'
+
+    with open('package.json', 'w') as file:
+        json.dump(package_data, file, indent=2)
 
 
 def authenticate(src: Path, npm_access_token: str):
@@ -32,7 +43,6 @@ def publish_npm_package(
     github_access_token: str,
     ignore: List[str] = [],
 ):
-    package_name = get_npm_package_name(src)
 
     if not npm_access_token:
         print('NPM access token is missing', flush=True, file=sys.stderr)
@@ -48,7 +58,11 @@ def publish_npm_package(
     if not changed:
         return
 
+    package_name = get_package_name(src)
+
     authenticate(src, npm_access_token)
+
+    set_package_version(src, version)
 
     run(['npm', 'publish', '--access=public'], cwd=src, check=True)
 
