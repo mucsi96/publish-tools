@@ -42,9 +42,10 @@ def publish_npm_package(
 
     with open(src / '.npmrc', 'w') as file:
         file.write(f'registry=https://registry.npmjs.org')
+        
+    environ['NODE_AUTH_TOKEN'] = npm_access_token
 
-    run(['npm', 'publish', '--access', 'public'], env={
-        'NODE_AUTH_TOKEN': npm_access_token}, cwd=src, check=True)
+    run(['npm', 'publish'], cwd=src, check=True)
 
     create_release(
         tag_prefix=tag_prefix,
