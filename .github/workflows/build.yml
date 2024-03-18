@@ -76,7 +76,6 @@ jobs:
         with:
           cache: npm
           cache-dependency-path: src/package-lock.json
-          registry-url: https://registry.npmjs.org
       - run: pip install -r requirements.txt
       - run: npm ci
         working-directory: src

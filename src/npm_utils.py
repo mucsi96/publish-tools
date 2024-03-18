@@ -16,6 +16,14 @@ def get_npm_package_name(root_path: Path):
         return package_data['name']
 
 
+def authenticate(src: Path, npm_access_token: str):
+    with open(src / '.npmrc', 'w') as file:
+        file.write(
+            f'//https://registry.npmjs.org/:_authToken={npm_access_token}')
+        file.close()
+    run(['npm', 'whoami'], cwd=src, check=True)
+
+
 def publish_npm_package(
     *,
     src: Path,
@@ -40,7 +48,7 @@ def publish_npm_package(
     if not changed:
         return
 
-    environ['NODE_AUTH_TOKEN'] = npm_access_token
+    authenticate(src, npm_access_token)
 
     run(['npm', 'publish'], cwd=src, check=True)
 
