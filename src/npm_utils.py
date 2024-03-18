@@ -50,7 +50,7 @@ def publish_npm_package(
 
     authenticate(src, npm_access_token)
 
-    run(['npm', 'publish'], cwd=src, check=True)
+    run(['npm', 'publish', '--access=public'], cwd=src, check=True)
 
     create_release(
         tag_prefix=tag_prefix,
