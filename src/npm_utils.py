@@ -19,7 +19,7 @@ def get_npm_package_name(root_path: Path):
 def authenticate(src: Path, npm_access_token: str):
     with open(src / '.npmrc', 'w') as file:
         file.write(
-            f'//https://registry.npmjs.org/:_authToken={npm_access_token}')
+            f'//registry.npmjs.org/:_authToken={npm_access_token}')
         file.close()
     run(['npm', 'whoami'], cwd=src, check=True)
 
