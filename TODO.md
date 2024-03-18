@@ -1,1 +1,1 @@
-- add NPN publishibg support https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages#publishing-packages-to-the-npm-registry
+- patch NPM version before publishing
