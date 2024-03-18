@@ -40,8 +40,8 @@ def publish_npm_package(
     if not changed:
         return
 
-    with open(src / '.npmrc', 'w') as file:
-        file.write(f'registry=https://registry.npmjs.org')
+    # with open(src / '.npmrc', 'w') as file:
+    #     file.write(f'registry=https://registry.npmjs.org')
         
     environ['NODE_AUTH_TOKEN'] = npm_access_token
 
