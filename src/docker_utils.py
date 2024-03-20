@@ -6,7 +6,8 @@ from textwrap import dedent
 from typing import List
 from .github_utils import create_release
 from .version_utils import get_version
-    
+
+
 def build_and_push_docker_img(
     *,
     src: Path,
