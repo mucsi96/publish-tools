@@ -10,7 +10,7 @@ from ansible.parsing.dataloader import DataLoader
 def load_vars(vault_secret: str, vars_file: Path) -> dict[str, str]:
     loader = DataLoader()
     loader.set_vault_secrets(
-        [VaultSecret(vault_secret.encode())])
+        [('default', VaultSecret(vault_secret.encode()))])
     return cast(dict[str, str], loader.load_from_file(str(vars_file)))
 
 

@@ -2,6 +2,7 @@
 
 from os import environ
 import sys
+import init
 from pathlib import Path
 from src.ansible_utils import load_vars
 from src.docker_utils import build_and_push_docker_img
