@@ -3,6 +3,7 @@
 
 from pathlib import Path
 from shutil import rmtree
+from subprocess import run
 import toml
 import init
 import sys
@@ -40,6 +41,8 @@ set_package_version(version)
 
 ProjectBuilder(source_dir='.').build(
     distribution='wheel', output_directory='dist')
+
+run(['unzip', '-l', 'dist/*.whl'])
 
 release_id = create_release(
     version=version, access_token=access_token, tag_prefix="version")
