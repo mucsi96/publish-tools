@@ -105,5 +105,11 @@ def create_pages_artifact(
     run(["chmod", "-c", "-R", "+rX", directory])
     run(["tar", "--dereference", "--hard-dereference",
         "--directory", directory, "-cvf", tar_file, "."])
-    with open(environ.get("GITHUB_OUTPUT"), 'a') as output:
+    github_output = environ.get("GITHUB_OUTPUT")
+    
+    if github_output == None:
+        print('GitHub output is not defined', flush=True, file=sys.stderr)
+        exit(1) 
+    
+    with open(github_output, 'a') as output:
         output.write(f"artifact={tar_file}")

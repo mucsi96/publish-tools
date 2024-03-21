@@ -2,16 +2,16 @@ from os import makedirs, path
 from pathlib import Path
 from secrets import choice
 from string import ascii_letters, digits
+from typing import cast
 from ansible.parsing.vault import VaultSecret
-from ansible.constants import DEFAULT_VAULT_ID_MATCH
 from ansible.parsing.dataloader import DataLoader
 
 
-def load_vars(vault_secret: str, vars_file: Path):
+def load_vars(vault_secret: str, vars_file: Path) -> dict[str, str]:
     loader = DataLoader()
     loader.set_vault_secrets(
-        [(DEFAULT_VAULT_ID_MATCH, VaultSecret(vault_secret.encode()))])
-    return loader.load_from_file(str(vars_file))
+        [VaultSecret(vault_secret.encode())])
+    return cast(dict[str, str], loader.load_from_file(str(vars_file)))
 
 
 def create_vault_key(vault_secret_file: Path):

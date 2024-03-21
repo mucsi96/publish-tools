@@ -59,7 +59,7 @@ def get_version(src: Path, tag_prefix: str, ignore: List[str] = []) -> tuple[boo
             version = re.sub(rf'^{tag_prefix}-', '', prev_tag)
             print(
                 f'No changes detected since {tag_prefix}:{version}', flush=True)
-            return False, version
+            return (False, int(version))
 
     latest_version = get_latest_version(tag_prefix)
 
