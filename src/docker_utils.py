@@ -22,7 +22,7 @@ def build_and_push_docker_img(
         print('GitHub access token is missing', flush=True, file=sys.stderr)
         exit(1)
 
-    changed, version = get_version(
+    (changed, version) = get_version(
         src=src, tag_prefix=tag_prefix, ignore=ignore)
 
     if not changed:

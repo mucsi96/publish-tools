@@ -24,7 +24,7 @@ if not access_token:
     print("GitHub access token is missing", flush=True, file=sys.stderr)
     exit(1)
 
-changed, version = get_version(src=Path("src"), tag_prefix="version")
+(changed, version) = get_version(src=Path("src"), tag_prefix="version")
 
 # if not changed:
 #     exit()
