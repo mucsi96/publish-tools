@@ -1,5 +1,4 @@
 import sys
-
 from subprocess import run
 from pathlib import Path
 from textwrap import dedent
