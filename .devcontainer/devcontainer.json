@@ -12,7 +12,8 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "ms-python.autopep8"
+        "ms-python.autopep8",
+        "esbenp.prettier-vscode"
       ]
     }
   }
