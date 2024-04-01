@@ -1,0 +1,23 @@
+name: Update dependencies
+
+on:
+  push:
+    branches:
+      - main
+
+# on:
+#   schedule:
+#     - cron: '0 0 1 5,11 *'
+#   workflow_dispatch:
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
+      - run: npx renovate --token ${{ secrets.GITHUB_TOKEN }}
