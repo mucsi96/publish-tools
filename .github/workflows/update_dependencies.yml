@@ -20,4 +20,4 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup node
         uses: actions/setup-node@v4
-      - run: npx renovate --token ${{ secrets.GITHUB_TOKEN }} --platform npm --autodiscover true
+      - run: npx renovate --token ${{ secrets.GITHUB_TOKEN }} --platform github --autodiscover true
