@@ -6,6 +6,7 @@ import init
 from pathlib import Path
 from src.ansible_utils import load_vars
 from src.docker_utils import build_and_push_docker_img
+from src.version_utils import get_version
 
 root_directory = Path(__file__).parent.parent
 secrets = load_vars(sys.argv[2], root_directory / 'vars/vault.yaml')
@@ -14,9 +15,15 @@ username = environ.get('GITHUB_REPOSITORY_OWNER')
 if username == None:
     print("GitHub username is missing", flush=True, file=sys.stderr)
     exit(1)
+    
+version = get_version(
+    src=root_directory,
+    tag_prefix="docker-image",
+)
 
 build_and_push_docker_img(
     src=root_directory / 'src',
+    version=version,
     tag_prefix="docker-image",
     image_name="publish-tools-test",
     docker_username=username,

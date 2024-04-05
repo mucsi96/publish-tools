@@ -1,5 +1,4 @@
 import json
-from os import environ
 import sys
 
 from subprocess import run
@@ -7,8 +6,6 @@ from pathlib import Path
 from textwrap import dedent
 from typing import List
 from .github_utils import create_release
-from .version_utils import get_version
-
 
 def get_package_name(root_path: Path):
     with open(root_path / 'package.json', 'r') as file:
@@ -38,10 +35,10 @@ def authenticate(src: Path, npm_access_token: str):
 def publish_npm_package(
     *,
     src: Path,
+    version: int,
     tag_prefix: str,
     npm_access_token: str,
-    github_access_token: str,
-    ignore: List[str] = [],
+    github_access_token: str
 ):
 
     if not npm_access_token:
@@ -51,12 +48,6 @@ def publish_npm_package(
     if not github_access_token:
         print('GitHub access token is missing', flush=True, file=sys.stderr)
         exit(1)
-
-    (changed, version) = get_version(
-        src=src, tag_prefix=tag_prefix, ignore=ignore)
-
-    if not changed:
-        return
 
     package_name = get_package_name(src)
 

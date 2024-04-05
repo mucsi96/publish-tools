@@ -11,6 +11,8 @@ from build import ProjectBuilder
 from src.github_utils import create_release, upload_release_asset
 from src.version_utils import get_version
 
+root_directory = Path(__file__).parent.parent
+
 
 def set_package_version(version: int):
     with open('pyproject.toml', 'r') as file:
@@ -28,10 +30,7 @@ if not access_token:
     print("GitHub access token is missing", flush=True, file=sys.stderr)
     exit(1)
 
-(changed, version) = get_version(src=Path("src"), tag_prefix="version")
-
-if not changed:
-    exit()
+version = get_version(src=root_directory, tag_prefix="version")
 
 rmtree("build", ignore_errors=True)
 rmtree("dist", ignore_errors=True)

@@ -51,15 +51,16 @@ def get_latest_version(tag_prefix: str):
         re.sub(rf'^{tag_prefix}-', '', latest_tag))
 
 
-def get_version(src: Path, tag_prefix: str, ignore: List[str] = []) -> tuple[bool, int]:
+def get_version(*, src: Path, tag_prefix: str, ignore: List[str] = []) -> int:
     prev_tag = get_previous_tag(tag_prefix)
 
     if prev_tag:
         if has_source_code_changed(src, prev_tag, ignore) is False:
             version = re.sub(rf'^{tag_prefix}-', '', prev_tag)
             print(
-                f'No changes detected since {tag_prefix}:{version}', flush=True)
-            return (False, int(version))
+                f'No changes detected since {tag_prefix}:{version} in {src}. Exiting...', flush=True)
+            
+            exit(0)
 
     latest_version = get_latest_version(tag_prefix)
 
@@ -70,7 +71,7 @@ def get_version(src: Path, tag_prefix: str, ignore: List[str] = []) -> tuple[boo
 
     print(
         f'Changes detected for {tag_prefix}. New version: {new_version}', flush=True)
-    return True, new_version
+    return new_version
 
 
 def set_version(tag_prefix: str, version: int) -> None:
