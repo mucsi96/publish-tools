@@ -2,7 +2,7 @@
 name = "publish_tools"
 version = "0.0.1"
 dependencies = [
-  "ansible == 8.6.1",
+  "ansible ==8.7.0",
   "requests == 2.31.0"
 ]
 
