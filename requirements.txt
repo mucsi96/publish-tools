@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-autopep8 == 2.0.4
+autopep8 == 2.1.0
 ansible == 9.5.1
-=======
-autopep8 ==2.1.0
-ansible ==8.7.0
->>>>>>> 53e68de311d532ea8c93efb2d0d4e8119afe9876
 requests == 2.31.0
-build ==1.2.1
-hatchling ==1.24.2
+build == 1.2.1
+hatchling == 1.24.2
 toml == 0.10.2
