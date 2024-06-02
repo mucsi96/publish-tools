@@ -2,8 +2,8 @@
 name = "publish_tools"
 version = "0.0.1"
 dependencies = [
-  "ansible == 9.5.1",
-  "requests == 2.31.0"
+  "ansible ==9.6.0",
+  "requests ==2.32.2"
 ]
 
 [[project.authors]]
