@@ -65,7 +65,7 @@ def publish_npm_package(
             [NPM package](https://www.npmjs.com/package/{package_name})
 
             ```json
-            "{package_name}": "{version}"
+            "{package_name}": "^{version}.0.0"
             ```
         ''')
     )
