@@ -43,7 +43,6 @@ ProjectBuilder(source_dir=".").build(distribution="wheel", output_directory="dis
 
 run(["unzip", "-l", "dist/*.whl"])
 run(["twine", "check", "dist/*.whl"])
-run(["twine", "upload", "dist/*.whl", "--non-interactive", "--verbose"])
 
 package_name = "mucsi96.publish-tools"
 
