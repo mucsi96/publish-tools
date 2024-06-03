@@ -31,7 +31,8 @@ if not access_token:
     print("GitHub access token is missing", flush=True, file=sys.stderr)
     exit(1)
 
-version = 21
+package_name = "mucsi96.publish-tools"
+version = get_version(src=root_directory, tag_prefix="version")
 
 rmtree("build", ignore_errors=True)
 rmtree("dist", ignore_errors=True)
@@ -44,7 +45,6 @@ ProjectBuilder(source_dir=".").build(distribution="wheel", output_directory="dis
 run(["unzip", "-l", "dist/*.whl"])
 run(["twine", "check", "dist/*.whl"])
 
-package_name = "mucsi96.publish-tools"
 
 create_release(
     version=version,
