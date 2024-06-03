@@ -1,24 +1,41 @@
 {
-    // For more information, visit: https://go.microsoft.com/fwlink/?LinkId=733558
-    "version": "2.0.0",
-    "tasks": [
-      {
-        "type": "shell",
-        "command": "ansible-vault encrypt vars/vault.yaml --vault-password-file .ansible/vault_key",
-        "label": "Encrypt vault",
-        "problemMatcher": []
-      },
-      {
-        "type": "shell",
-        "command": "ansible-vault decrypt vars/vault.yaml --vault-password-file .ansible/vault_key",
-        "label": "Decrypt vault",
-        "problemMatcher": []
-      },
-      {
-        "type": "shell",
-        "command": "ansible-vault view vars/vault.yaml --vault-password-file .ansible/vault_key",
-        "label": "view vault",
-        "problemMatcher": []
+  // For more information, visit: https://go.microsoft.com/fwlink/?LinkId=733558
+  "version": "2.0.0",
+  "osx": {
+    "options": {
+      "shell": {
+        "executable": "${env:SHELL}",
+        "args": ["--login", "--interactive"]
       }
-    ]
-  }
+    }
+  },
+  "tasks": [
+    {
+      "type": "shell",
+      "command": "./scripts/install_dependencies.sh",
+      "label": "Install dependencies",
+      "options": {
+        "cwd": "${workspaceFolder}",
+      },
+      "problemMatcher": []
+    },
+    {
+      "type": "shell",
+      "command": "ansible-vault encrypt vars/vault.yaml --vault-password-file .ansible/vault_key",
+      "label": "Encrypt vault",
+      "problemMatcher": []
+    },
+    {
+      "type": "shell",
+      "command": "ansible-vault decrypt vars/vault.yaml --vault-password-file .ansible/vault_key",
+      "label": "Decrypt vault",
+      "problemMatcher": []
+    },
+    {
+      "type": "shell",
+      "command": "ansible-vault view vars/vault.yaml --vault-password-file .ansible/vault_key",
+      "label": "view vault",
+      "problemMatcher": []
+    }
+  ]
+}
