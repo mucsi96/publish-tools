@@ -1,4 +1,4 @@
-autopep8 ==2.2.0
+autopep8 ==2.3.0
 ansible ==9.6.1
 requests ==2.32.3
 build == 1.2.1
