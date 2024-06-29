@@ -3,7 +3,7 @@
 project=publish-tools
 pyenv_version=3.12.3
 
-brew update && brew install pyenv pyenv-virtualenv node
+brew update && brew install pyenv pyenv-virtualenv node gnupg openjdk
 
 if ! pyenv virtualenvs | grep -q "$project"; then
     pyenv install $pyenv_version --skip-existing

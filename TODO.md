@@ -1,0 +1,1 @@
+- Maven central publish https://github.com/WasiqB/maven-publish-action

@@ -20,21 +20,24 @@
       "problemMatcher": []
     },
     {
-      "type": "shell",
-      "command": "ansible-vault encrypt vars/vault.yaml --vault-password-file .ansible/vault_key",
+      "type": "process",
+      "command": "ansible-vault",
+      "args": ["encrypt", "vars/vault.yaml", "--vault-password-file", ".ansible/vault_key"],
       "label": "Encrypt vault",
       "problemMatcher": []
     },
     {
-      "type": "shell",
-      "command": "ansible-vault decrypt vars/vault.yaml --vault-password-file .ansible/vault_key",
+      "type": "process",
+      "command": "ansible-vault",
+      "args": ["decrypt", "vars/vault.yaml", "--vault-password-file", ".ansible/vault_key"],
       "label": "Decrypt vault",
       "problemMatcher": []
     },
     {
-      "type": "shell",
-      "command": "ansible-vault view vars/vault.yaml --vault-password-file .ansible/vault_key",
-      "label": "view vault",
+      "type": "process",
+      "command": "ansible-vault",
+      "args": ["view", "vars/vault.yaml", "--vault-password-file", ".ansible/vault_key"],
+      "label": "View vault",
       "problemMatcher": []
     }
   ]
