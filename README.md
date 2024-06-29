@@ -3,6 +3,8 @@ Tools for package publishing
 
 # GPG
 
+https://central.sonatype.org/publish/requirements/gpg/#listing-keys
+
 1. Install GNU GPG
 
 ```bash
@@ -25,5 +27,11 @@ gpg --list-secret-keys --keyid-format=long
 
 ```bash
 gpg --export-secret-keys -a <key-id> > secret.txt
+```
+
+5. Distribute Your Public Key
+
+```bash
+gpg --keyserver keyserver.ubuntu.com --send-keys <your-key-id>
 ```
 
