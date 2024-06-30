@@ -1,3 +1,4 @@
+from os import environ
 from tempfile import NamedTemporaryFile
 import xml.etree.ElementTree as xml
 import sys
@@ -102,6 +103,14 @@ def publish_mvn_package(
         ],
         cwd=src,
         check=True,
+        env={
+            **dict(
+                MAVEN_USERNAME=maven_username,
+                MAVEN_PASSWORD=maven_password,
+                GPG_PASSPHRASE=gpg_passphrase,
+            ),
+            **dict(environ),
+        },
     )
 
     create_release(
