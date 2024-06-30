@@ -21,7 +21,10 @@ secrets = load_vars(sys.argv[2], root_directory / 'vars/vault.yaml')
 publish_mvn_package(
     src=root_directory / 'src',
     version=4,
-    tag_prefix="npm-package",
-    npm_access_token=secrets['npm_access_token'],
+    tag_prefix="mvn-package",
+    maven_username=secrets['maven_username'],
+    maven_password=secrets['maven_password'],
+    gpg_private_key=secrets['gpg_private_key'],
+    gpg_passphrase=secrets['gpg_passphrase'],
     github_access_token=sys.argv[1]
 )

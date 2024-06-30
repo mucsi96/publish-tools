@@ -1,3 +1,4 @@
+from tempfile import NamedTemporaryFile
 import xml.etree.ElementTree as xml
 import sys
 
@@ -38,6 +39,17 @@ def set_package_version(root_path: Path, version: int):
     )
 
 
+def import_gpg_key(gpg_private_key: str):
+    with NamedTemporaryFile(mode="w") as key_file:
+        key_file.write(dedent(gpg_private_key))
+        key_file.flush()
+
+        run(
+            ["gpg", "--batch", "--import", key_file.name],
+            check=True,
+        )
+
+
 def publish_mvn_package(
     *,
     src: Path,
@@ -53,15 +65,15 @@ def publish_mvn_package(
     if not maven_username:
         print("Maven username is missing", flush=True, file=sys.stderr)
         exit(1)
-        
+
     if not maven_password:
         print("Maven password is missing", flush=True, file=sys.stderr)
         exit(1)
-        
+
     if not gpg_private_key:
         print("GPG private key is missing", flush=True, file=sys.stderr)
         exit(1)
-        
+
     if not gpg_passphrase:
         print("GPG passphrase is missing", flush=True, file=sys.stderr)
         exit(1)
@@ -70,10 +82,45 @@ def publish_mvn_package(
         print("GitHub access token is missing", flush=True, file=sys.stderr)
         exit(1)
 
-    package_name = get_package_info(src)
-    
+    package_info = get_package_info(src)
+
     set_package_version(src, version)
 
-    run(['npm', 'publish', '--access=public'], cwd=src, check=True)
-    
-    print(package_name)
+    import_gpg_key(gpg_private_key)
+
+    settings_path = Path(__file__).parent / "settings.xml"
+
+    run(
+        [
+            "mvn",
+            "deploy",
+            "--batch-mode",
+            "--activate-profiles",
+            "release",
+            "--settings",
+            settings_path,
+        ],
+        cwd=src,
+        check=True,
+    )
+
+    create_release(
+        tag_prefix=tag_prefix,
+        version=version,
+        access_token=github_access_token,
+        body=dedent(
+            f"""
+            [MVN package](https://mvnrepository.com/artifact/{package_info['group_id']}/{package_info['artifact_id']})
+
+            ```xml
+                <!-- https://mvnrepository.com/artifact/{package_info['group_id']}/{package_info['artifact_id']} -->
+                <dependency>
+                    <groupId>{package_info['group_id']}</groupId>
+                    <artifactId>{package_info['artifact_id']}</artifactId>
+                    <version>{version}.0.0</version>
+                </dependency>
+            ```
+        """
+        ),
+    )
+    print(f"MVN package pushed successfully for {tag_prefix}:{version}", flush=True)
