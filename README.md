@@ -1,6 +1,10 @@
 # publish-tools
 Tools for package publishing
 
+# Maven
+
+https://central.sonatype.com/
+
 # GPG
 
 https://central.sonatype.org/publish/requirements/gpg/#listing-keys
