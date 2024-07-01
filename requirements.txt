@@ -4,4 +4,4 @@ requests ==2.32.3
 build == 1.2.1
 hatchling ==1.25.0
 toml == 0.10.2
-twine == 5.1.0
+twine ==5.1.1
