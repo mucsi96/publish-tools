@@ -13,14 +13,14 @@ from src.version_utils import get_version
 root_directory = Path(__file__).parent.parent
 secrets = load_vars(sys.argv[2], root_directory / 'vars/vault.yaml')
 
-# version= get_version(
-#     src=root_directory,
-#     tag_prefix="npm-package",
-# )
+version= get_version(
+    src=root_directory,
+    tag_prefix="npm-package",
+)
 
 publish_mvn_package(
     src=root_directory / 'src',
-    version=4,
+    version=version,
     tag_prefix="mvn-package",
     maven_username=secrets['maven_username'],
     maven_password=secrets['maven_password'],
