@@ -15,7 +15,7 @@ secrets = load_vars(sys.argv[2], root_directory / 'vars/vault.yaml')
 
 version= get_version(
     src=root_directory,
-    tag_prefix="npm-package",
+    tag_prefix="mvn-package",
 )
 
 publish_mvn_package(
