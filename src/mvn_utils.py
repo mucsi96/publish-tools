@@ -51,6 +51,31 @@ def import_gpg_key(gpg_private_key: str):
         )
 
 
+def add_release_profile(root_path: Path):
+    namespace = {"maven": maven_namespace}
+    template_root = xml.parse(Path(__file__).parent / "template/pom.xml").getroot()
+    template_profiles = template_root.find("maven:profiles", namespace)
+
+    if template_profiles is None:
+        raise Exception("No profiles found in template")
+
+    tree = xml.parse(root_path / "pom.xml")
+    root = tree.getroot()
+    profiles = root.find("maven:profiles", namespace)
+
+    if profiles is None:
+        root.append(template_profiles)
+    else:
+        profiles.append(template_profiles[0])
+
+    tree.write(
+        root_path / "pom.xml",
+        encoding="utf-8",
+        xml_declaration=True,
+        default_namespace=maven_namespace,
+    )
+
+
 def publish_mvn_package(
     *,
     src: Path,
@@ -88,6 +113,8 @@ def publish_mvn_package(
     set_package_version(src, version)
 
     import_gpg_key(gpg_private_key)
+
+    add_release_profile(src)
 
     settings_path = Path(__file__).parent / "settings.xml"
 
