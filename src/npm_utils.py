@@ -35,12 +35,14 @@ def authenticate(src: Path, npm_access_token: str):
 def publish_npm_package(
     *,
     src: Path,
-    version: int,
+    version: int | None,
     tag_prefix: str,
     npm_access_token: str,
     github_access_token: str
 ):
-
+    if version is None:
+        return
+    
     if not npm_access_token:
         print('NPM access token is missing', flush=True, file=sys.stderr)
         exit(1)

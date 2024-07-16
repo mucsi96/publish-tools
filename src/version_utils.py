@@ -51,16 +51,16 @@ def get_latest_version(tag_prefix: str):
         re.sub(rf'^{tag_prefix}-', '', latest_tag))
 
 
-def get_version(*, src: Path, tag_prefix: str, ignore: List[str] = []) -> int:
+def get_version(*, src: Path, tag_prefix: str, ignore: List[str] = []) -> int | None:
     prev_tag = get_previous_tag(tag_prefix)
 
     if prev_tag:
         if has_source_code_changed(src, prev_tag, ignore) is False:
             version = re.sub(rf'^{tag_prefix}-', '', prev_tag)
             print(
-                f'No changes detected since {tag_prefix}:{version} in {src}. Exiting...', flush=True)
+                f'No changes detected since {tag_prefix}:{version} in {src}.', flush=True)
             
-            exit(0)
+            return None
 
     latest_version = get_latest_version(tag_prefix)
 

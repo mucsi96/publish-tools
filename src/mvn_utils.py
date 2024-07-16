@@ -79,7 +79,7 @@ def add_release_profile(root_path: Path):
 def publish_mvn_package(
     *,
     src: Path,
-    version: int,
+    version: int | None,
     tag_prefix: str,
     maven_username: str,
     maven_password: str,
@@ -88,6 +88,9 @@ def publish_mvn_package(
     github_access_token: str,
 ):
 
+    if version is None:
+        return
+    
     if not maven_username:
         print("Maven username is missing", flush=True, file=sys.stderr)
         exit(1)

@@ -9,13 +9,16 @@ from .github_utils import create_release
 def build_and_push_docker_img(
     *,
     src: Path,
-    version: int,
+    version: int | None,
     tag_prefix: str,
     image_name: str,
     docker_username: str,
     docker_password: str,
     github_access_token: str,
 ):
+    if version is None:
+        return
+    
     if not github_access_token:
         print('GitHub access token is missing', flush=True, file=sys.stderr)
         exit(1)
