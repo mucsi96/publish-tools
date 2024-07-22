@@ -4,7 +4,7 @@ version = "21.0.0"
 description = "Publishing tools for continuous integration"
 readme = "README.md"
 readme-content-type = "text/markdown"
-dependencies = [ "ansible ==9.7.0", "requests ==2.32.3",]
+dependencies = [ "ansible ==9.8.0", "requests ==2.32.3",]
 [[project.authors]]
 name = "Igor Bari"
 email = "mucsi96@gmail.com"
